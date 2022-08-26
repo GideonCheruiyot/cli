@@ -2,9 +2,7 @@
 // wired into the vscode launch task (.vscode/launch.json)
 {
 	"image": "mcr.microsoft.com/devcontainers/base:latest",
-	"features": {
-		"go": {
-			"version": "latest"
-		}
-	}
+	"onCreateCommand": "echo $USER",
+	"postAttachCommand": "echo $USER",
+	"updateContentCommand": "echo $USER"
 }

@@ -106,8 +106,6 @@ export type UserEnvProbe = 'none' | 'loginInteractiveShell' | 'interactiveShell'
 
 export type DevContainerConfigCommand = 'initializeCommand' | 'onCreateCommand' | 'updateContentCommand' | 'postCreateCommand' | 'postStartCommand' | 'postAttachCommand';
 
-const defaultWaitFor: DevContainerConfigCommand = 'updateContentCommand';
-
 export interface CommonDevContainerConfig {
 	configFilePath?: URI;
 	remoteEnv?: Record<string, string | null>;
@@ -284,6 +282,10 @@ export function probeRemoteEnv(params: ResolverParameters, containerProperties: 
 }
 
 export async function runPostCreateCommands(params: ResolverParameters, containerProperties: ContainerProperties, config: CommonDevContainerConfig, remoteEnv: Promise<Record<string, string>>, stopForPersonalization: boolean): Promise<'skipNonBlocking' | 'prebuild' | 'stopForPersonalization' | 'done'> {
+	let defaultWaitFor = undefined;
+	if (!!config.updateContentCommand) {
+		defaultWaitFor = 'updateContentCommand';
+	}
 	const skipNonBlocking = params.postCreate.skipNonBlocking;
 	const waitFor = config.waitFor || defaultWaitFor;
 	if (skipNonBlocking && waitFor === 'initializeCommand') {

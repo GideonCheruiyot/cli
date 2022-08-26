@@ -15,6 +15,7 @@
                 "up",
                 "--workspace-folder",
                 "${workspaceFolder}/src/test/configs/example", // Edit this example config to test the CLI against a custom configuration.
+                "--skip-non-blocking-commands",
                 "--log-level",
                 "debug",
             ],
